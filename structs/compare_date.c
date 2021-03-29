@@ -6,16 +6,15 @@ Retornar o dia que compoe a data. int comparaDatas(Data data1, Data data2), reto
 
 #include <stdio.h>
 
-struct _date {
+typedef struct {
     int day, month, year;
-};
-typedef struct _date Date;
+} Date;
 
-int extraiDia(struct _date date) {
+int extraiDia(Date date) {
     return date.day;
 }
 
-int comparaDatas(struct _date date1, struct _date date2) {
+int comparaDatas(Date date1, Date date2) {
     
     if (date1.year == date2.year && date1.month == date2.month && date1.day == date2.day)
     {
@@ -44,13 +43,9 @@ int comparaDatas(struct _date date1, struct _date date2) {
 
 int main() {
 
-    struct _date dataAtual;
+    Date dataAtual = {15, 03, 2021};
 
-    dataAtual.day = 15;
-    dataAtual.month = 3;
-    dataAtual.year = 2021;
-
-    struct _date date;
+    Date date;
     scanf("%d %d %d", &date.day, &date.month, &date.year);
 
     printf("Return: %d\n", comparaDatas(dataAtual, date));

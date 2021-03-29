@@ -8,11 +8,8 @@ typedef struct
 
 Complexo criaComplexo(double real, double imaginario)
 {
-    Complexo complexo;
+    Complexo complexo = {real, imaginario};
     
-    complexo.real = real;
-    complexo.imaginario = imaginario;
-
     return complexo;
 }
 
@@ -39,7 +36,7 @@ int main()
 
     soma = somaComplexo(a, b);
 
-    printf("real: %lf\nimaginario: %lfi\n", soma.real, soma.imaginario);
+    printf("%lf + %lfi\n", soma.real, soma.imaginario);
 
     return 0;
 }
