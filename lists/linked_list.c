@@ -1,8 +1,6 @@
-/* Crie as estruturas indicadas, e crie o primeiro funcionário da lista;
-Adicione um segundo funcionário ao início da lista;
-Crie uma função capaz de imprimir todos os funcionários; */
-
 #include <stdio.h>
+
+#define NAME_LENGTH 50
 
 typedef struct
 {
@@ -12,63 +10,60 @@ typedef struct
 struct funcionario
 {
     int id;
-    char nome[41];
-    double salario;
+    char nome[NAME_LENGTH];
     Data nascimento;
+    double salario;
     struct funcionario *proximo;
 };
 typedef struct funcionario Funcionario;
 
-Data createDate(int d, int m, int y)
-{
-    Data date = {d, m, y};
-
-    return date;
-}
-
 void imprimeFuncionario(Funcionario *lista)
 {
     Funcionario *aux = lista;
-
     while (aux != NULL)
     {
         int dia = aux->nascimento.dia;
         int mes = aux->nascimento.mes;
         int ano = aux->nascimento.ano;
 
-        printf("id: %d | nome: %s | salario: R$ %.2lf | nascimento: %d/%d/%d\n", aux->id, aux->nome, aux->salario, dia, mes, ano);
+        printf("\nFuncionario: \n");
+        printf("\t-> ID: %d\n", aux->id);
+        printf("\t-> Nome: %s", aux->nome);
+        printf("\t-> Data de Nascimento: %d/%d/%d\n", dia, mes, ano);
+        printf("\t-> Salario: R$ %.2f\n", aux->salario);
 
         aux = aux->proximo;
     }
-
-    printf("\n");
 }
 
-Funcionario *criarFuncionario(Funcionario *lista, int id, char *name, Data nascimento, double salario)
+Funcionario *criarFuncionario(Funcionario *lista)
 {
-    Funcionario *funcionario = malloc(sizeof(Funcionario));
-    funcionario->id = id;
-    snprintf(funcionario->nome, 41, name);
-    funcionario->nascimento = nascimento;
-    funcionario->salario = salario;
+    Funcionario *funcionario = malloc(sizeof(Funcionario)), *aux;
+
+    printf("\n-> Insira um funcionario: \n");
+    scanf("\n");
+    fgets(funcionario->nome, sizeof(funcionario->nome), stdin);
+    scanf("%d/%d/%d", &funcionario->nascimento.dia, &funcionario->nascimento.mes, &funcionario->nascimento.ano);
+    scanf("%lf", &funcionario->salario);
 
     if (lista == NULL)
     {
-        lista = funcionario;
+        funcionario->id = 1;
         funcionario->proximo = NULL;
+        return funcionario;
     }
-    else
-    {
-        funcionario->proximo = lista;
-        lista = funcionario;
-    }
+
+    funcionario->proximo = lista;
+    funcionario->id = lista->id + 1;
+
+    lista = funcionario;
 
     return lista;
 }
 
 Funcionario *deletarFuncionario(Funcionario *lista, int id)
 {
-    Funcionario *aux = lista, *anterior;
+    Funcionario *aux = lista, *anterior = NULL;
 
     for (aux; aux != NULL; aux = aux->proximo)
     {
@@ -82,27 +77,26 @@ Funcionario *deletarFuncionario(Funcionario *lista, int id)
             {
                 anterior->proximo = aux->proximo;
             }
-
             free(aux);
-            return lista;
         }
         anterior = aux;
     }
 
-    printf("Funcionario não encontrado!");
+    printf("Funcionario nao encontrado!\n");
+    return lista;
 }
 
 int main()
 {
     Funcionario *lista = NULL;
 
-    lista = criarFuncionario(lista, 1, "Yato", createDate(15, 10, 1995), 500.0);
-    lista = criarFuncionario(lista, 2, "Satoru Gojo", createDate(8, 2, 1987), 10000.0);
-    lista = criarFuncionario(lista, 3, "Eren Yeager", createDate(7, 12, 2003), 1200.0);
+    lista = criarFuncionario(lista);
+    lista = criarFuncionario(lista);
+    lista = criarFuncionario(lista);
 
     imprimeFuncionario(lista);
 
-    lista = deletarFuncionario(lista, 2);
+    lista = deletarFuncionario(lista, 4);
 
     imprimeFuncionario(lista);
 
