@@ -1,7 +1,7 @@
 /* The program returns:
-        -1 if the date1 comes before than date2;
-        1 if the date1 comes after than data2;
-        0 if both dates are equal */
+        * -1 if the date1 comes before than date2;
+        * 1 if the date1 comes after than data2;
+        * 0 if both dates are equal */
 
 #include <stdio.h>
 
@@ -12,7 +12,6 @@ typedef struct
 
 int compareDates(Date date1, Date date2)
 {
-
     if (date1.year == date2.year && date1.month == date2.month && date1.day == date2.day)
     {
         return 0;
