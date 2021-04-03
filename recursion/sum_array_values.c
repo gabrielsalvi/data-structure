@@ -1,22 +1,27 @@
-// Sum of the vector values
-
 #include <stdio.h>
 
-int somatorio(int vetor[], int pos)
+int sum(int array[], int length)
 {
-    if (pos == 0)
+    if (length == 0)
     {
-        return vetor[pos];
+        return array[length];
     }
 
-    return somatorio(vetor, pos - 1) + vetor[pos];
+    return sum(array, length - 1) + array[length];
 }
 
 int main()
 {
-    int vetor[] = {1, 2, 3, 4, 10};
+    int array[6], length = (sizeof(array) / sizeof(array[0])) - 1;
 
-    printf("%d\n", somatorio(vetor, 4));
+    printf("Type integer values:\n");
+
+    for (int i = 0; i < length; i++)
+    {
+        scanf("%d", &array[i]);
+    }
+
+    printf("\nSum of the array values: %d\n", sum(array, length));
 
     return 0;
 }
