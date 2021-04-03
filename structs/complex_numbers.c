@@ -3,40 +3,40 @@
 typedef struct
 {
     double real;
-    double imaginario;
-} Complexo;
+    double imaginary;
+} Complex;
 
-Complexo criaComplexo(double real, double imaginario)
+Complex createComplex(double real, double imaginary)
 {
-    Complexo complexo = {real, imaginario};
-    
-    return complexo;
+    Complex complex = {real, imaginary};
+
+    return complex;
 }
 
-Complexo somaComplexo(Complexo a, Complexo b)
+Complex sumComplex(Complex a, Complex b)
 {
-    Complexo soma;
+    Complex sum;
 
-    soma.real = a.real + b.real;
-    soma.imaginario = a.imaginario + b.imaginario;
+    sum.real = a.real + b.real;
+    sum.imaginary = a.imaginary + b.imaginary;
 
-    return soma;
+    return sum;
 }
 
 int main()
 {
-    double num1, num2, num3, num4;
-    scanf("%lf %lf", &num1, &num2);
-    scanf("%lf %lf", &num3, &num4);
+    double n1, n2, n3, n4;
+    scanf("%lf %lf", &n1, &n2);
+    scanf("%lf %lf", &n3, &n4);
 
-    Complexo a, b, soma;
+    Complex a, b, sum;
 
-    a = criaComplexo(num1, num2);
-    b = criaComplexo(num3, num4);
+    a = createComplex(n1, n2);
+    b = createComplex(n3, n4);
 
-    soma = somaComplexo(a, b);
+    sum = sumComplex(a, b);
 
-    printf("%lf + %lfi\n", soma.real, soma.imaginario);
+    printf("%lf + %lfi\n", sum.real, sum.imaginary);
 
     return 0;
 }
