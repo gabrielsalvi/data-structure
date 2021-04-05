@@ -9,34 +9,37 @@ typedef struct list List;
 
 List *createNewElement()
 {
-    List *new = (List *)malloc(sizeof(List));
+    List *new = malloc(sizeof(List));
     return new;
 }
 
-List* insertAtBeginning(List* head, int number)
+List *insertAtBeginning(List *first, int number)
 {
     List *new = createNewElement();
 
     new->number = number;
 
-    if (head == NULL)
+    if (first == NULL)
     {
-        head = new;
         new->next = NULL;
-    }
-    else
-    {
-        new->next = head;
-        head = new;
+        return new;
     }
 
-    return head;
+    // new->next = first; In this case, the first will always be the last one of the list
+    // first = new;
+
+    new->next = first->next;
+    first->next = new; // the first will awalys remain the first one of the list
+
+    return first;
 }
 
-void printList(List *head) {
-    List *aux = head;
-    
-    while(aux != NULL) {
+void printList(List *first)
+{
+    List *aux = first;
+
+    while (aux != NULL)
+    {
         printf("%d -> ", aux->number);
         aux = aux->next;
     }
@@ -45,13 +48,16 @@ void printList(List *head) {
 
 int main()
 {
-    List *head = NULL;
+    List *first = NULL;
 
-    head = insertAtBeginning(head, 10);
-    head = insertAtBeginning(head, 4);
-    head = insertAtBeginning(head, 16);
-    
-    printList(head);
+    first = insertAtBeginning(first, 10);
+    first = insertAtBeginning(first, 4);
+    first = insertAtBeginning(first, 16);
+    first = insertAtBeginning(first, 18);
+    first = insertAtBeginning(first, 2);
+    first = insertAtBeginning(first, 5);
+
+    printList(first);
 
     return 0;
 }
