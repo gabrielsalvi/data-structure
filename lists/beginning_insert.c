@@ -25,11 +25,13 @@ List *insertAtBeginning(List *first, int number)
         return new;
     }
 
-    // new->next = first; In this case, the first will always be the last one of the list
-    // first = new;
+    // The first will always be the last one of the list
+    new->next = first; 
+    first = new;
 
-    new->next = first->next;
-    first->next = new; // the first will awalys remain the first one of the list
+    // The first will awalys remain the first one of the list
+    // new->next = first->next;
+    // first->next = new;
 
     return first;
 }
@@ -49,15 +51,16 @@ void printList(List *first)
 int main()
 {
     List *first = NULL;
+    int number;
 
-    first = insertAtBeginning(first, 10);
-    first = insertAtBeginning(first, 4);
-    first = insertAtBeginning(first, 16);
-    first = insertAtBeginning(first, 18);
-    first = insertAtBeginning(first, 2);
-    first = insertAtBeginning(first, 5);
+    printf("Count from x to zero. x = ");
+    scanf("\n%d", &number);
+
+    for (int i = 0; i <= number; i++)
+    {
+        first = insertAtBeginning(first, i);
+    }
 
     printList(first);
 
-    return 0;
 }
