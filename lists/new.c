@@ -9,36 +9,31 @@ typedef struct listaInt ListaInt;
 
 ListaInt *constroiLista(int length, int *v)
 {
-    ListaInt *lista = NULL;
-    ListaInt *novo = malloc(sizeof(ListaInt)), *auxiliar, *ultimo;
-    
+    ListaInt *lista, *auxiliar;
+
     for (int i = 0; i < length; i++)
-    {   
+    {
+        ListaInt *novo = malloc(sizeof(ListaInt));
+
         novo->valor = v[i];
         novo->proximo = NULL;
+
+        auxiliar = lista;
 
         if (lista == NULL)
         {
             lista = novo;
-            printf("novo: %d\n", novo->valor);
         }
         else
-        {   
-            auxiliar = lista;
+        {
             while (auxiliar->proximo != NULL)
-            {   
+            {
                 auxiliar = auxiliar->proximo;
             }
 
-            novo->valor = v[i];
-            novo->proximo = NULL;
             auxiliar->proximo = novo;
-            lista = auxiliar;
-            
-            printf("novo: %d\n", novo->valor);
         }
-        
-        printf("ultimo: %d\n", ultimo->valor);
+        printf("novo: %d\n", novo->valor);
     }
 
     return lista;
@@ -46,14 +41,17 @@ ListaInt *constroiLista(int length, int *v)
 
 int main()
 {
-    int v[4] = {1, 21, 4, 6};
+    ListaInt *lista;
+    int length, v[4] = {1, 21, 4, 6};
 
-    ListaInt *lista = constroiLista(4, v);
+    length = sizeof(v) / sizeof(v[0]);
+
+    lista = constroiLista(length, v);
 
     ListaInt *aux = lista;
     while (aux != NULL)
     {
-        printf("%d, ", aux->valor);
+        printf("%d -> ", aux->valor);
         aux = aux->proximo;
     }
 
