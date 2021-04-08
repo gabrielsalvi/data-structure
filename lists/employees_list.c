@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 #define NAME_LENGTH 50
 
@@ -47,7 +48,7 @@ void printEmployee(Employee *list)
 
 Employee *registerEmployee(Employee *list)
 {
-    Employee *employee = malloc(sizeof(Employee));
+    Employee *employee = (Employee *) malloc(sizeof(Employee));
 
     printf("\n-> Register an employee: \n");
     scanf("\n");
@@ -130,38 +131,129 @@ IntList *buildIntList(int length, int *v)
     return list;
 }
 
+int listLength(Employee *employee)
+{
+    Employee *aux = employee;
+    int elements = 0;
+
+    while (aux != NULL)
+    {
+        elements += 1;
+        aux = aux->next;
+    }
+
+    return elements;
+}
+
+double lowerSalary(Employee *employee)
+{
+    Employee *aux = employee;
+    double lower = employee->salary;
+
+    while (aux != NULL)
+    {
+        if (aux->salary < lower)
+        {
+            lower = aux->salary;
+        }
+        aux = aux->next;
+    }
+
+    return lower;
+}
+
+Employee *olderEmployee(Employee *employee)
+{
+    Employee *older = employee;
+    Employee *aux = employee->next;
+
+    if (listLength(employee) <= 1)
+    {
+        return employee;
+    }
+
+    while (aux->next != NULL)
+    {
+        if (older->birth.year > aux->birth.year)
+        {
+            older = aux;
+        }
+        else if (older->birth.year == aux->birth.year)
+        {
+            if (older->birth.month > aux->birth.month)
+            {
+                older = aux;
+            }
+            else if (older->birth.month == aux->birth.month)
+            {
+                if (older->birth.day > aux->birth.day)
+                {
+                    older = aux;
+                }
+            }
+        }
+        aux = aux->next;
+    }
+
+    return older;
+}
+
+// int compareLists(*list, *list2) {
+
+// }
+
+Employee *printReverseList(Employee *list)
+{
+    if (list == NULL)
+    {
+        return;
+    }
+
+    printReverseList(list->next);
+
+    int day = list->birth.day;
+    int month = list->birth.month;
+    int year = list->birth.year;
+
+    printf("\n\t-> ID: %d\n", list->id);
+    printf("\t-> Name: %s", list->name);
+    printf("\t-> Birth Date: %d/%d/%d\n", day, month, year);
+    printf("\t-> Salary: R$%.2f\n", list->salary);
+}
+
 int main()
 {
-    // Employee *list = NULL;
-    // int num_employees;
+    Employee *list = NULL;
+    int num_employees;
 
-    // printf("How many employees do you want to register? -> ");
-    // scanf("%d", &num_employees);
+    printf("How many employees do you want to register? -> ");
+    scanf("%d", &num_employees);
 
-    // for (int i = 0; i < num_employees; i++)
-    // {
-    //     list = registerEmployee(list);
-    // }
+    for (int i = 0; i < num_employees; i++)
+    {
+        list = registerEmployee(list);
+    }
 
     // printEmployee(list);
 
     // list = deleteEmployee(list, 3);
 
-    // printEmployee(list);
+    printEmployee(list);
+    printReverseList(list);
 
-    IntList *int_list;
-    int length, v[4] = {1, 21, 4, 6};
+    // IntList *int_list;
+    // int length, v[4] = {1, 21, 4, 6};
 
-    length = sizeof(v) / sizeof(v[0]);
+    // length = sizeof(v) / sizeof(v[0]);
 
-    int_list = buildIntList(length, v);
+    // int_list = buildIntList(length, v);
 
-    IntList *aux = int_list;
-    while (aux != NULL)
-    {
-        printf("%d -> ", aux->value);
-        aux = aux->next;
-    }
+    // IntList *aux = int_list;
+    // while (aux != NULL)
+    // {
+    //     printf("%d -> ", aux->value);
+    //     aux = aux->next;
+    // }
 
     return 0;
 }
