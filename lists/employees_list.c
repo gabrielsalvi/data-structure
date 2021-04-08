@@ -17,6 +17,13 @@ struct employee
 };
 typedef struct employee Employee;
 
+struct intList
+{
+    int value;
+    struct intList *next;
+};
+typedef struct intList IntList;
+
 void printEmployee(Employee *list)
 {
     Employee *aux = list;
@@ -40,7 +47,7 @@ void printEmployee(Employee *list)
 
 Employee *registerEmployee(Employee *list)
 {
-    Employee *employee = malloc(sizeof(Employee)), *aux;
+    Employee *employee = malloc(sizeof(Employee));
 
     printf("\n-> Register an employee: \n");
     scanf("\n");
@@ -92,24 +99,69 @@ Employee *deleteEmployee(Employee *list, int id)
     return list;
 }
 
-int main()
+IntList *buildIntList(int length, int *v)
 {
-    Employee *list = NULL;
-    int num_employees;
+    IntList *list, *aux;
 
-    printf("How many employees do you want to register? -> ");
-    scanf("%d", &num_employees);
-
-    for (int i = 0; i < num_employees; i++)
+    for (int i = 0; i < length; i++)
     {
-        list = registerEmployee(list);
+        IntList *new = malloc(sizeof(IntList));
+
+        new->value = v[i];
+        new->next = NULL;
+
+        aux = list;
+
+        if (list == NULL)
+        {
+            list = new;
+        }
+        else
+        {
+            while (aux->next != NULL)
+            {
+                aux = aux->next;
+            }
+
+            aux->next = new;
+        }
     }
 
-    printEmployee(list);
+    return list;
+}
 
-    list = deleteEmployee(list, 3);
+int main()
+{
+    // Employee *list = NULL;
+    // int num_employees;
 
-    printEmployee(list);
+    // printf("How many employees do you want to register? -> ");
+    // scanf("%d", &num_employees);
+
+    // for (int i = 0; i < num_employees; i++)
+    // {
+    //     list = registerEmployee(list);
+    // }
+
+    // printEmployee(list);
+
+    // list = deleteEmployee(list, 3);
+
+    // printEmployee(list);
+
+    IntList *int_list;
+    int length, v[4] = {1, 21, 4, 6};
+
+    length = sizeof(v) / sizeof(v[0]);
+
+    int_list = buildIntList(length, v);
+
+    IntList *aux = int_list;
+    while (aux != NULL)
+    {
+        printf("%d -> ", aux->value);
+        aux = aux->next;
+    }
 
     return 0;
 }
