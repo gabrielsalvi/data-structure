@@ -48,7 +48,7 @@ void printEmployee(Employee *list)
 
 Employee *registerEmployee(Employee *list)
 {
-    Employee *employee = (Employee *) malloc(sizeof(Employee));
+    Employee *employee = (Employee *)malloc(sizeof(Employee));
 
     printf("\n-> Register an employee: \n");
     scanf("\n");
@@ -198,9 +198,27 @@ Employee *olderEmployee(Employee *employee)
     return older;
 }
 
-// int compareLists(*list, *list2) {
+int compareLists(Employee *list, Employee *list2)
+{
+    if (list->next == NULL && list2->next == NULL)
+    {
+        return 1;
+    }
+    else if (list->next == NULL || list2->next == NULL)
+    {
+        return 0;
+    }
 
-// }
+    Employee *i, *j;
+
+    for (i=list, j=list2; i->next != NULL && j->next != NULL; i=i->next, j=j->next) {
+        if(i->id != j->id) {
+            return 0;
+        }
+    }
+
+    return 1;
+}
 
 Employee *printReverseList(Employee *list)
 {
@@ -234,11 +252,14 @@ int main()
         list = registerEmployee(list);
     }
 
-    // printEmployee(list);
-
-    // list = deleteEmployee(list, 3);
-
     printEmployee(list);
+    
+    Employee *list2 = list;
+    list2 = deleteEmployee(list, 3);
+
+    printf("The lists are equal? (no = 0/ yes = 1) -> %d", compareLists(list, list2));
+
+    printEmployee(list2);
     printReverseList(list);
 
     // IntList *int_list;
