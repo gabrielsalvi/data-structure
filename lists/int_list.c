@@ -1,58 +1,61 @@
 #include <stdio.h>
 
-struct listaInt
+struct intList
 {
-    int valor;
-    struct listaInt *proximo;
+    int value;
+    struct intList *next;
 };
-typedef struct listaInt ListaInt;
+typedef struct intList IntList;
 
-ListaInt *constroiLista(int length, int *v)
+IntList *getLast(IntList *list) {
+    IntList *last = list;
+
+    for (last;last->next!=NULL;last=last->next);
+
+    return last;
+}
+
+IntList *buildIntList(int length, int *v)
 {
-    ListaInt *lista, *auxiliar;
+    IntList *list, *aux;
 
     for (int i = 0; i < length; i++)
     {
-        ListaInt *novo = malloc(sizeof(ListaInt));
+        IntList *new = malloc(sizeof(IntList));
 
-        novo->valor = v[i];
-        novo->proximo = NULL;
+        new->value = v[i];
+        new->next = NULL;
 
-        auxiliar = lista;
+        aux = list;
 
-        if (lista == NULL)
+        if (list == NULL)
         {
-            lista = novo;
+            list = new;
         }
         else
         {
-            while (auxiliar->proximo != NULL)
-            {
-                auxiliar = auxiliar->proximo;
-            }
-
-            auxiliar->proximo = novo;
+            aux = getLast(aux);
+            aux->next = new;
         }
-        printf("novo: %d\n", novo->valor);
     }
 
-    return lista;
+    return list;
 }
 
 int main()
 {
-    ListaInt *lista;
+    IntList *list;
     int length, v[4] = {1, 21, 4, 6};
 
     length = sizeof(v) / sizeof(v[0]);
 
-    lista = constroiLista(length, v);
+    list = buildIntList(length, v);
 
-    ListaInt *aux = lista;
+    IntList *aux = list;
     while (aux != NULL)
     {
-        printf("%d -> ", aux->valor);
-        aux = aux->proximo;
+        printf("%d -> ", aux->value);
+        aux = aux->next;
     }
 
     return 0;
