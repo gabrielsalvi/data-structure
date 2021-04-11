@@ -18,13 +18,6 @@ struct employee
 };
 typedef struct employee Employee;
 
-struct intList
-{
-    int value;
-    struct intList *next;
-};
-typedef struct intList IntList;
-
 void printEmployee(Employee *list)
 {
     Employee *aux = list;
@@ -46,27 +39,38 @@ void printEmployee(Employee *list)
     }
 }
 
+Employee *getLast(Employee *list)
+{
+  Employee *last=list;
+  for (last;last->next!=NULL;last=last->next);
+  return last;
+}
+
 Employee *registerEmployee(Employee *list)
 {
-    Employee *employee = (Employee *)malloc(sizeof(Employee));
+    Employee *employee = (Employee *)malloc(sizeof(Employee)), *aux;
 
     printf("\n-> Register an employee: \n");
     scanf("\n");
     fgets(employee->name, sizeof(employee->name), stdin);
     scanf("%d/%d/%d", &employee->birth.day, &employee->birth.month, &employee->birth.year);
     scanf("%lf", &employee->salary);
+    employee->next = NULL;
 
     if (list == NULL)
     {
         employee->id = 1;
-        employee->next = NULL;
         return employee;
     }
+    else
+    {
+        aux = list;
 
-    employee->next = list;
-    employee->id = list->id + 1;
+        aux = getLast(aux);
 
-    list = employee;
+        employee->id = aux->id + 1;
+        aux->next = employee;
+    }
 
     return list;
 }
@@ -97,37 +101,6 @@ Employee *deleteEmployee(Employee *list, int id)
     }
 
     printf("\nNo employee with id = '%d' was found!\n", id);
-    return list;
-}
-
-IntList *buildIntList(int length, int *v)
-{
-    IntList *list, *aux;
-
-    for (int i = 0; i < length; i++)
-    {
-        IntList *new = malloc(sizeof(IntList));
-
-        new->value = v[i];
-        new->next = NULL;
-
-        aux = list;
-
-        if (list == NULL)
-        {
-            list = new;
-        }
-        else
-        {
-            while (aux->next != NULL)
-            {
-                aux = aux->next;
-            }
-
-            aux->next = new;
-        }
-    }
-
     return list;
 }
 
@@ -211,8 +184,10 @@ int compareLists(Employee *list, Employee *list2)
 
     Employee *i, *j;
 
-    for (i=list, j=list2; i->next != NULL && j->next != NULL; i=i->next, j=j->next) {
-        if(i->id != j->id) {
+    for (i = list, j = list2; i->next != NULL && j->next != NULL; i = i->next, j = j->next)
+    {
+        if (i->id != j->id)
+        {
             return 0;
         }
     }
@@ -253,28 +228,14 @@ int main()
     }
 
     printEmployee(list);
-    
-    Employee *list2 = list;
-    list2 = deleteEmployee(list, 3);
+    list = deleteEmployee(list, 2);
 
-    printf("The lists are equal? (no = 0/ yes = 1) -> %d", compareLists(list, list2));
+    printf("\nThe lists are equal? (no = 0 / yes = 1) -> %d\n", compareLists(list, list));
 
-    printEmployee(list2);
+    printEmployee(list);
+
+    printf("\nEmployees Reverse List:\n");
     printReverseList(list);
-
-    // IntList *int_list;
-    // int length, v[4] = {1, 21, 4, 6};
-
-    // length = sizeof(v) / sizeof(v[0]);
-
-    // int_list = buildIntList(length, v);
-
-    // IntList *aux = int_list;
-    // while (aux != NULL)
-    // {
-    //     printf("%d -> ", aux->value);
-    //     aux = aux->next;
-    // }
 
     return 0;
 }
