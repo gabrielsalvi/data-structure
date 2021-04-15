@@ -36,12 +36,8 @@ Student *registerStudent(Student *head)
 
     scanf("\n");
 
-    fgets(student->registration, REG_LENGTH, stdin);
-    student->registration[strlen(student->registration) - 1] = '\0';
-
-    fgets(student->name, NAME_LENGTH, stdin);
-    student->name[strlen(student->name) - 1] = '\0';
-
+    gets(student->registration);
+    gets(student->name);
     scanf("%d/%d/%d", &student->birth.day, &student->birth.month, &student->birth.year);
     scanf("%f", &student->mean);
     student->next = NULL;
@@ -160,9 +156,11 @@ int main()
         switch (op)
         {
         case 0:
-            if (head != NULL) {
+            if (head != NULL)
+            {
                 clear(head);
             }
+            printf("\n\n");
             exit(0);
         case 1:
             head = registerStudent(head);
@@ -176,8 +174,7 @@ int main()
 
             memset(registration, 0, REG_LENGTH);
             scanf("\n");
-            fgets(registration, REG_LENGTH, stdin);
-            registration[strlen(registration) - 1] = '\0';
+            gets(registration);
 
             head = deleteStudent(head, registration);
             break;
@@ -211,8 +208,7 @@ int main()
 
             memset(registration, 0, REG_LENGTH);
             scanf("\n");
-            fgets(registration, REG_LENGTH, stdin);
-            registration[strlen(registration) - 1] = '\0';
+            gets(registration);
 
             printStudent(head, registration);
             break;
