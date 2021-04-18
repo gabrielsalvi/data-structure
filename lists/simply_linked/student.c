@@ -24,7 +24,8 @@ typedef struct student
 Student *getLast(Student *head)
 {
     Student *last = head;
-    for (last; last->next != NULL; last = last->next);
+    for (last; last->next != NULL; last = last->next)
+        ;
     return last;
 }
 
@@ -49,7 +50,7 @@ Student *registerStudent(Student *head)
     return head;
 }
 
-Student *deleteStudent(Student *head)
+Student *deleteStudent(Student *head, char registration[10])
 {
     if (head == NULL)
     {
@@ -58,9 +59,6 @@ Student *deleteStudent(Student *head)
     }
 
     Student *aux = head, *previous = NULL, *next = NULL;
-
-    char registration[REG_LEN];
-    scanf("%s", registration);
 
     while (aux)
     {
@@ -121,7 +119,7 @@ void printStudentsInversely(Student *head)
     printf("%s, %s, %d/%d/%d, %.2f\n", aux->registration, aux->name, aux->birth.day, aux->birth.month, aux->birth.year, aux->average);
 }
 
-void printStudent(Student *head)
+void printStudent(Student *head, char registration[10])
 {
     if (head == NULL)
     {
@@ -130,9 +128,6 @@ void printStudent(Student *head)
     }
 
     Student *aux = head;
-
-    char registration[REG_LEN];
-    scanf("%s", registration);
 
     for (aux; aux != NULL; aux = aux->next)
     {
@@ -176,41 +171,48 @@ void clear(Student *head)
 int main()
 {
     Student *head = NULL;
-    int op;
 
+    int op;
+    char registration[REG_LEN];
+    
     while (op != 0)
     {
         scanf("%d", &op);
 
         switch (op)
         {
-            case 0:
-                clear(head);
-                printf("\n\n");
-                break;
+        case 0:
+            clear(head);
+            printf("\n\n");
+            break;
 
-            case 1:
-                head = registerStudent(head);
-                break;
+        case 1:
+            head = registerStudent(head);
+            break;
 
-            case 2:
-                head = deleteStudent(head);
-                break;
+        case 2:
+            scanf("%s", registration);
 
-            case 3:
-                printStudents(head);
-                break;
+            head = deleteStudent(head, registration);
+            break;
 
-            case 4:
-                printStudentsInversely(head);
-                break;
+        case 3:
+            printStudents(head);
+            break;
 
-            case 5:
-                printStudent(head);
-                break;
-            case 6:
-                printf("%d\n", listLength(head));
-                break;
+        case 4:
+            printStudentsInversely(head);
+            break;
+
+        case 5:
+            scanf("%s", registration);
+
+            printStudent(head, registration);
+            break;
+
+        case 6:
+            printf("%d\n", listLength(head));
+            break;
         }
     }
 
