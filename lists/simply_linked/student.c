@@ -152,13 +152,7 @@ void clear(Student *head)
 {
     if (head == NULL)
     {
-        return;
-    }
-
-    if (head->next == NULL)
-    {
-        free(head);
-        printf("-");
+        head = NULL;
         return;
     }
 
@@ -172,17 +166,17 @@ int main()
 {
     Student *head = NULL;
 
-    int op;
     char registration[REG_LEN];
-    
+
+    int op;
+    scanf("%d", &op);
+
     while (op != 0)
     {
-        scanf("%d", &op);
-
         switch (op)
         {
         case 0:
-            clear(head);
+            clear(&head);
             printf("\n\n");
             break;
 
@@ -214,6 +208,8 @@ int main()
             printf("%d\n", listLength(head));
             break;
         }
+
+        scanf("%d", &op);
     }
 
     return 0;
