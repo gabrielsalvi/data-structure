@@ -1,22 +1,22 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define NAME_LENGTH 50
+#define NAME_LENGTH 40
 
 typedef struct
 {
     int day, month, year;
 } Data;
 
-struct employee
+typedef struct employee
 {
     int id;
     char name[NAME_LENGTH];
     Data birth;
     double salary;
+    struct employee *previous;
     struct employee *next;
-};
-typedef struct employee Employee;
+} Employee;
 
 Employee *getLast(Employee *list)
 {
@@ -35,6 +35,7 @@ Employee *registerEmployee(Employee *list)
     fgets(employee->name, sizeof(employee->name), stdin);
     scanf("%d/%d/%d", &employee->birth.day, &employee->birth.month, &employee->birth.year);
     scanf("%lf", &employee->salary);
+    employee->previous = NULL;
     employee->next = NULL;
 
     if (list == NULL)
@@ -47,6 +48,7 @@ Employee *registerEmployee(Employee *list)
         aux = getLast(list);
 
         employee->id = aux->id + 1;
+        employee->previous = aux;
         aux->next = employee;
     }
 
@@ -61,19 +63,23 @@ Employee *deleteEmployee(Employee *list, int id)
         return;
     }
 
-    Employee *aux = list, *previous = NULL;
-
-    for (aux; aux != NULL; aux = aux->next)
+    for (Employee *aux = list; aux != NULL; aux = aux->next)
     {
         if (aux->id == id)
         {
             if (aux == list)
             {
                 list = list->next;
+                list->previous = NULL;
+            }
+            if (aux->next == NULL)
+            {
+                aux->previous->next = NULL;
             }
             else
             {
-                previous->next = aux->next;
+                aux->previous->next = aux->next;
+                aux->next->previous = aux->previous;
             }
 
             printf("\nThe employee has been deleted! (ID: %d)\n", aux->id);
@@ -81,7 +87,6 @@ Employee *deleteEmployee(Employee *list, int id)
 
             return list;
         }
-        previous = aux;
     }
 
     printf("\nNo employee with id = '%d' was found!\n", id);
@@ -98,8 +103,6 @@ void printEmployees(Employee *list)
 
     Employee *aux = list;
 
-    printf("\nEmployees List:\n");
-
     while (aux != NULL)
     {
         printf("\n\t-> ID: %d\n", aux->id);
@@ -113,12 +116,19 @@ void printEmployees(Employee *list)
 
 void printEmployeesInversely(Employee *list)
 {
-    Employee *aux = list;
-
     if (list == NULL)
     {
+        printf("Lista Vazia!\n");
         return;
     }
+
+    if (list->next == NULL)
+    {
+        printEmployee(list, list->id);
+        return;
+    }
+
+    Employee *aux = list;
 
     printEmployeesInversely(aux->next);
 
@@ -271,7 +281,7 @@ int main()
             {
                 clear(list);
             }
-            
+
             exit(0);
 
         case 1:
@@ -279,7 +289,7 @@ int main()
             break;
 
         case 2:
-            printf("\nType the id id to delete the employee: -> ");
+            printf("\nType the id to delete the employee: -> ");
             scanf("%d", &id);
 
             list = deleteEmployee(list, id);
@@ -290,11 +300,6 @@ int main()
             break;
 
         case 4:
-            if (list == NULL)
-            {
-                printf("Lista Vazia!\n");
-            }
-
             printEmployeesInversely(list);
             break;
 
