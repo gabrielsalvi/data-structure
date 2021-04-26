@@ -23,9 +23,8 @@ typedef struct student
 
 Student *getLast(Student *head)
 {
-    Student *last = head;
-    for (last; last->next != NULL; last = last->next)
-        ;
+    Student *last;
+    for (last = head; last->next != NULL; last = last->next);
     return last;
 }
 
@@ -52,12 +51,6 @@ Student *registerStudent(Student *head)
 
 Student *deleteStudent(Student *head, char registration[10])
 {
-    if (head == NULL)
-    {
-        printf("Lista Vazia!\n");
-        return head;
-    }
-
     Student *aux = head, *previous = NULL, *next = NULL;
 
     while (aux)
@@ -82,17 +75,12 @@ Student *deleteStudent(Student *head, char registration[10])
             aux = aux->next;
         }
     }
+
     return head;
 }
 
 void printStudents(Student *head)
 {
-    if (head == NULL)
-    {
-        printf("Lista Vazia!\n");
-        return;
-    }
-
     for (Student *aux = head; aux != NULL; aux = aux->next)
     {
         printf("%s, %s, %d/%d/%d, %.2f\n", aux->registration, aux->name, aux->birth.day, aux->birth.month, aux->birth.year, aux->average);
@@ -103,39 +91,11 @@ void printStudentsInversely(Student *head)
 {
     if (head == NULL)
     {
-        printf("Lista Vazia!\n");
         return;
     }
 
-    if (head->next == NULL)
-    {
-        printf("%s, %s, %d/%d/%d, %.2f\n", head->registration, head->name, head->birth.day, head->birth.month, head->birth.year, head->average);
-        return;
-    }
-
-    Student *aux = head;
-
-    printStudentsInversely(aux->next);
-    printf("%s, %s, %d/%d/%d, %.2f\n", aux->registration, aux->name, aux->birth.day, aux->birth.month, aux->birth.year, aux->average);
-}
-
-void printStudent(Student *head, char registration[10])
-{
-    if (head == NULL)
-    {
-        printf("Lista Vazia!\n");
-        return;
-    }
-
-    Student *aux = head;
-
-    for (aux; aux != NULL; aux = aux->next)
-    {
-        if (strcmp(aux->registration, registration) == 0)
-        {
-            printf("%s, %s, %d/%d/%d, %.2f\n", aux->registration, aux->name, aux->birth.day, aux->birth.month, aux->birth.year, aux->average);
-        }
-    }
+    printStudentsInversely(head->next);
+    printf("%s, %s, %d/%d/%d, %.2f\n", head->registration, head->name, head->birth.day, head->birth.month, head->birth.year, head->average);
 }
 
 int listLength(Student *head)
@@ -152,7 +112,6 @@ void clear(Student *head)
 {
     if (head == NULL)
     {
-        head = NULL;
         return;
     }
 
@@ -165,18 +124,20 @@ void clear(Student *head)
 int main()
 {
     Student *head = NULL;
-
     char registration[REG_LEN];
 
-    int op;
-    scanf("%d", &op);
+    int op = -1;
 
     while (op != 0)
     {
+        scanf("%d", &op);
+
         switch (op)
         {
         case 0:
-            clear(&head);
+            clear(head);
+            head = NULL;
+
             printf("\n\n");
             break;
 
@@ -187,29 +148,39 @@ int main()
         case 2:
             scanf("%s", registration);
 
+            if (head == NULL)
+            {
+                printf("Lista Vazia!\n");
+                break;
+            }
+
             head = deleteStudent(head, registration);
             break;
 
         case 3:
+            if (head == NULL)
+            {
+                printf("Lista Vazia!\n");
+                break;
+            }
+
             printStudents(head);
             break;
 
         case 4:
+            if (head == NULL)
+            {
+                printf("Lista Vazia!\n");
+                break;
+            }
+
             printStudentsInversely(head);
             break;
 
         case 5:
-            scanf("%s", registration);
-
-            printStudent(head, registration);
-            break;
-
-        case 6:
             printf("%d\n", listLength(head));
             break;
         }
-
-        scanf("%d", &op);
     }
 
     return 0;
