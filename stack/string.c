@@ -8,43 +8,44 @@ typedef struct stack
     struct stack *next;
 } Stack;
 
-Stack *getLast(Stack *stack)
-{
-    Stack *last = stack;
-    for (last; last->next != NULL; last = last->next);
-    return last;
+typedef struct stackorder {
+    struct stackorder *top;
+    struct stackorder *bottom;
+} StackOrder;
+
+void initStackOrder(StackOrder *sOrder) {
+    sOrder->top = NULL;
+    sOrder->bottom = NULL;
 }
 
-Stack *push(Stack *stack, char *string)
+void *push(Stack *top, char *string)
 {
     Stack *aux;
 
-    for (int i = strlen(string) - 1; i >= 0; i--)
+    for (int i = 0; i >= strlen(string) - 1; i++)
     {
         Stack *new = malloc(sizeof(Stack));
 
         new->character = string[i];
         new->next = NULL;
 
-        aux = stack;
+        aux = top;
 
-        if (stack == NULL)
+        if (top == NULL)
         {
-            stack = new;
+            top = new;
         }
         else
         {
-            aux = getLast(aux);
             aux->next = new;
+            top = new;
         }
     }
-
-    return stack;
 }
 
-void clearStack(Stack *stack)
+void clearStack(Stack *top)
 {
-    Stack *aux = stack, *next = NULL;
+    Stack *aux = top, *next = NULL;
 
     while (aux != NULL)
     {
@@ -57,14 +58,15 @@ void clearStack(Stack *stack)
 
 int main()
 {
-    Stack *stack = NULL;
+    StackOrder stack_order;
+    initStackOrder(&stack_order);
 
     char string[15];
     scanf("%s", string);
 
-    stack = push(stack, string);
+    push(&stack_order.top, string);
 
-    clearStack(stack);
+    clearStack(&stack_order.top);
 
     return 0;
 }
