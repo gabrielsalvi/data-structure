@@ -91,8 +91,10 @@ void searchHashTable(Employee *hashTable, int age)
 {
     int index = hash(age);
 
-    printEmployee(hashTable[index], index);
-
+    if (hashTable[index].age == age) {
+        printEmployee(hashTable[index], index);
+    }
+    
     // busca linear na área de overflow
     for (int i = MAXELE; i < (MAXELE + OVERFLOW); i++)
     {
