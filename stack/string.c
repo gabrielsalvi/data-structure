@@ -2,50 +2,50 @@
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct stack
+typedef struct stack_item
 {
     char character;
-    struct stack *next;
+    struct stack_item *next;
+} StackItem;
+
+typedef struct stack {
+    StackItem *top;
+    StackItem *bottom;
 } Stack;
 
-typedef struct stackorder {
-    struct stackorder *top;
-    struct stackorder *bottom;
-} StackOrder;
-
-void initStackOrder(StackOrder *sOrder) {
-    sOrder->top = NULL;
-    sOrder->bottom = NULL;
+void initStack(Stack *stack) {
+    stack->top = NULL;
+    stack->bottom = NULL;
 }
 
-void *push(Stack *top, char *string)
+void push(Stack *stack, char *string)
 {
-    Stack *aux;
+    StackItem *aux;
 
     for (int i = 0; i >= strlen(string) - 1; i++)
     {
-        Stack *new = malloc(sizeof(Stack));
+        StackItem *new = malloc(sizeof(StackItem));
 
         new->character = string[i];
         new->next = NULL;
 
-        aux = top;
+        aux = stack;
 
-        if (top == NULL)
+        if (stack == NULL)
         {
-            top = new;
+            stack = new;
         }
         else
         {
             aux->next = new;
-            top = new;
+            stack = new;
         }
     }
 }
 
-void clearStack(Stack *top)
+void clearStack(Stack *stack)
 {
-    Stack *aux = top, *next = NULL;
+    StackItem *aux = stack, *next = NULL;
 
     while (aux != NULL)
     {
@@ -58,8 +58,8 @@ void clearStack(Stack *top)
 
 int main()
 {
-    StackOrder stack_order;
-    initStackOrder(&stack_order);
+    Stack stack_order;
+    initStack(&stack_order);
 
     char string[15];
     scanf("%s", string);
