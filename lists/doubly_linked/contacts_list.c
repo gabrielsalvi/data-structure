@@ -72,7 +72,7 @@ Contact *createContact(ContactsList *clist)
 {
      char email[40];
 
-     printf("\nDigite os dados do contato: \n");
+     printf("\nDigite os dados do novo contato: \n");
 
      printf("\nEmail: ");
      scanf("%s", email);
@@ -98,8 +98,8 @@ Contact *createContact(ContactsList *clist)
           return contact;
      }
 
-     printf("\nOpa! Já existe um contato com esse email cadastrado na agenda. Abortando inserção!\n");
-     
+     printf("\nOpa! Já existe um contato com o email '%s' cadastrado na agenda. Abortando inserção!\n", email);
+
      return NULL;
 }
 
@@ -139,6 +139,8 @@ void insContact(ContactsList *clist)
           contact->prev = clist->tail;
           clist->tail = contact;
      }
+
+     printf("\nLegal, %s agora faz parte dos seus contatos!\n", contact->name);
 }
 
 // deve ser passado pelo menos o email
@@ -183,6 +185,8 @@ void insContactAfter(ContactsList *clist, char *email)
                clist->head = contact;
           }
      }
+
+     printf("\nLegal, %s agora faz parte dos seus contatos!\n", contact->name);
 }
 
 // Permite excluir um contato da agenda baseado no email
@@ -215,8 +219,8 @@ void delContact(ContactsList *clist, char *email)
           contact->next->prev = contact->prev;
      }
 
+     printf("\nO contato de email '%s' foi excluído com sucesso!\n", contact->email);
      free(contact);
-     printf("\nO contato de email '%s' foi excluído com sucesso!\n", email);
 }
 
 // Lista o conteúdo da agenda (todos os campos)
@@ -237,14 +241,14 @@ void queryContact(Contact *contact, char *name)
      {
           if (strcmp(aux->name, name) == 0)
           {
-               i = i + 1;
+               i += 1;
                printContact(aux);
           }
      }
 
      if (i == 0)
      {
-          printf("\nNenhum contato encontrado com esse nome!\n");
+          printf("\nNenhum contato encontrado com o nome '%s'!\n", name);
      }
 }
 
@@ -255,7 +259,7 @@ void upContact(ContactsList *clist, char *email)
 
      if (contact == NULL)
      {
-          printf("\nNão há nenhum contato cadastrado com esse email!\n");
+          printf("\nNão há nenhum contato cadastrado com o email '%s'!\n", email);
           return;
      }
 
@@ -272,7 +276,7 @@ void upContact(ContactsList *clist, char *email)
 
      int op = 1;
 
-     while (op != 0)
+     while (op != 0)     
      {
           printf("\nQue campo você deseja alterar? \n\t-> (0) Voltar; (1) Nome; (2) Data de Nascimento; (3) Telefone : ");
           scanf("%d", &op);
@@ -298,12 +302,15 @@ void upContact(ContactsList *clist, char *email)
                break;
           }
 
-          printf("\nVocê deseja alterar mais algum campo desse contato? -> (1) Sim; (2) Não : ");
-          scanf("%d", &op);
+          if (op != 0)
+          {
+               printf("\nVocê deseja alterar mais algum campo desse contato? -> (1) Sim; (2) Não : ");
+               scanf("%d", &op);
+          }
 
           if (op == 2)
           {
-               printf("\nContato com as alterações: \n");
+               printf("\nContato com as alterações:\n");
                printf("\t-> %s, %d/%d/%d, %s, %s\n", name, birth.day, birth.month, birth.year, contact->email, phone);
 
                printf("\nVocê deseja salvar as alterações feitas? -> (1) Sim; (2) Não : ");
@@ -315,7 +322,7 @@ void upContact(ContactsList *clist, char *email)
                     strcpy(contact->phone, phone);
                     contact->birth = birth;
 
-                    printf("\nContato atualizado com sucesso!\n");
+                    printf("\nO contato de email '%s' foi atualizado com sucesso!\n", contact->email);
                }
                else
                {
@@ -425,7 +432,7 @@ int main()
      }
 
      freeMem(&clist); // liberar toda a memória alocada
-     printf("\nPrograma Finalizada!\n");
+     printf("\nPrograma Finalizado!\n");
 
      return 0;
 }
