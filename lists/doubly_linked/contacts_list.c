@@ -1,22 +1,9 @@
-/*
- Este é um esqueleto que deve ser utilizado como base para implementação da Agenda:
-  - As funções não têm os parâmetros definidos e os parâmetros, caso necessários, devem ser incluídos.
-  - Caso seja necessário novas funções podem ser incluídas
-  - Devem ser respeitados os nomes dados para o métodos e estruturas, porém novas estruturas e funções podem ser criados, caso julgue necessário
-  - Faça os includes necessários
-  - A organização das funções fica a critério do programador
-  - Códigos não indentados sofrerão duras penalidades
-  - Não serão toleradas variáveis globais
-  - Caso seja detectado plágio, os grupos envolvidos receberão nota 0.
-*/
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#define EXIT 10 // valor fixo para a opção que finaliza a aplicação
+#define EXIT 10
 
-//Struct que representa a data.
 typedef struct
 {
      int day;
@@ -24,7 +11,6 @@ typedef struct
      int year;
 } Date;
 
-// Estrutura que contém os campos dos registros da agenda
 struct MREC
 {
      char name[30];
@@ -35,7 +21,6 @@ struct MREC
      struct MREC *prev;
 };
 
-// Tipo criado para instanciar variáveis do tipo agenda
 typedef struct MREC Contact;
 
 typedef struct
@@ -103,7 +88,6 @@ Contact *createContact(ContactsList *clist)
      return NULL;
 }
 
-// Apresenta o menu da aplicação e retorna a opção selecionada
 int menu()
 {
      int op;
@@ -117,7 +101,6 @@ int menu()
      return op;
 }
 
-// Permite o cadastro de um contato
 void insContact(ContactsList *clist)
 {
      Contact *contact = createContact(clist);
@@ -143,7 +126,6 @@ void insContact(ContactsList *clist)
      printf("\nLegal, %s agora faz parte dos seus contatos!\n", contact->name);
 }
 
-// deve ser passado pelo menos o email
 void insContactAfter(ContactsList *clist, char *email)
 {
      Contact *contact = createContact(clist);
@@ -189,7 +171,6 @@ void insContactAfter(ContactsList *clist, char *email)
      printf("\nLegal, %s agora faz parte dos seus contatos!\n", contact->name);
 }
 
-// Permite excluir um contato da agenda baseado no email
 void delContact(ContactsList *clist, char *email)
 {
      Contact *contact = getContactByEmail(clist->head, email);
@@ -223,7 +204,6 @@ void delContact(ContactsList *clist, char *email)
      free(contact);
 }
 
-// Lista o conteúdo da agenda (todos os campos)
 void listContacts(Contact *contact)
 {
      for (Contact *aux = contact; aux != NULL; aux = aux->next)
@@ -232,7 +212,6 @@ void listContacts(Contact *contact)
      }
 }
 
-// Permite consultar um contato da agenda por nome
 void queryContact(Contact *contact, char *name)
 {
      int i = 0;
@@ -252,7 +231,6 @@ void queryContact(Contact *contact, char *name)
      }
 }
 
-// Permite a atualização dos dados de um contato da agenda
 void upContact(ContactsList *clist, char *email)
 {
      Contact *contact = getContactByEmail(clist->head, email);
@@ -349,7 +327,6 @@ void freeMem(ContactsList *clist)
      initContactsList(clist);
 }
 
-// Programa principal
 int main()
 {
      int op = EXIT + 1;
@@ -431,7 +408,7 @@ int main()
           }
      }
 
-     freeMem(&clist); // liberar toda a memória alocada
+     freeMem(&clist);
      printf("\nPrograma Finalizado!\n");
 
      return 0;
