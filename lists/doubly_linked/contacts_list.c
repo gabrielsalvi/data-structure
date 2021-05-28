@@ -11,17 +11,17 @@ typedef struct
      int year;
 } Date;
 
-struct MREC
+struct contact_
 {
      char name[30];
      Date birth;
      char email[40];
      char phone[15];
-     struct MREC *next;
-     struct MREC *prev;
+     struct contact_ *next;
+     struct contact_ *prev;
 };
 
-typedef struct MREC Contact;
+typedef struct contact_ Contact;
 
 typedef struct
 {
@@ -101,7 +101,7 @@ int menu()
      return op;
 }
 
-void insContact(ContactsList *clist)
+void insertContact(ContactsList *clist)
 {
      Contact *contact = createContact(clist);
 
@@ -126,7 +126,7 @@ void insContact(ContactsList *clist)
      printf("\nLegal, %s agora faz parte dos seus contatos!\n", contact->name);
 }
 
-void insContactAfter(ContactsList *clist, char *email)
+void insertContactAfter(ContactsList *clist, char *email)
 {
      Contact *contact = createContact(clist);
 
@@ -171,7 +171,7 @@ void insContactAfter(ContactsList *clist, char *email)
      printf("\nLegal, %s agora faz parte dos seus contatos!\n", contact->name);
 }
 
-void delContact(ContactsList *clist, char *email)
+void deleteContact(ContactsList *clist, char *email)
 {
      Contact *contact = getContactByEmail(clist->head, email);
 
@@ -194,7 +194,7 @@ void delContact(ContactsList *clist, char *email)
           clist->tail = clist->tail->prev;
           clist->tail->next = NULL;
      }
-     else // quando o contato está no meio da agenda
+     else
      {
           contact->prev->next = contact->next;
           contact->next->prev = contact->prev;
@@ -231,7 +231,7 @@ void queryContact(Contact *contact, char *name)
      }
 }
 
-void upContact(ContactsList *clist, char *email)
+void updateContact(ContactsList *clist, char *email)
 {
      Contact *contact = getContactByEmail(clist->head, email);
 
@@ -256,7 +256,7 @@ void upContact(ContactsList *clist, char *email)
 
      while (op != 0)     
      {
-          printf("\nQue campo você deseja alterar? \n\t-> (0) Voltar; (1) Nome; (2) Data de Nascimento; (3) Telefone : ");
+          printf("\nQue campo você deseja alterar? \n\t-> (0) Voltar ao menu; (1) Nome; (2) Data de Nascimento; (3) Telefone : ");
           scanf("%d", &op);
 
           switch (op)
@@ -344,14 +344,14 @@ int main()
           switch (op)
           {
           case 1:
-               insContact(&clist);
+               insertContact(&clist);
                break;
 
           case 2:
                printf("\nEmail anterior: ");
                scanf("%s", email);
 
-               insContactAfter(&clist, email);
+               insertContactAfter(&clist, email);
                break;
 
           case 3:
@@ -364,7 +364,7 @@ int main()
                printf("\nEmail do Contato: ");
                scanf("%s", email);
 
-               delContact(&clist, email);
+               deleteContact(&clist, email);
                break;
 
           case 4:
@@ -377,7 +377,7 @@ int main()
                printf("\nEmail do Contato: ");
                scanf("%s", email);
 
-               upContact(&clist, email);
+               updateContact(&clist, email);
                break;
 
           case 5:
