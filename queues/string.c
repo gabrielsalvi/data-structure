@@ -15,7 +15,7 @@ Queue *getLast(Queue *queue)
     return last;
 }
 
-Queue *putQueue(Queue *queue, char *string)
+Queue *insertQueue(Queue *queue, char *string)
 {
     Queue *aux;
 
@@ -64,10 +64,12 @@ int main()
     Queue *queue = NULL;
 
     char string[15];
+    printf("Type a string: ");
     scanf("%s", string);
+    
+    queue = insertQueue(queue, string);
 
-    queue = putQueue(queue, string);
-
+    printf("Clearing the queue: ");
     queue = clearQueue(queue);
 
     return 0;
