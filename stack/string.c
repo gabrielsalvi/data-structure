@@ -5,68 +5,67 @@
 typedef struct stack_item
 {
     char character;
-    struct stack_item *next;
+    struct stack_item *down;
 } StackItem;
 
-typedef struct stack {
+typedef struct
+{
     StackItem *top;
-    StackItem *bottom;
 } Stack;
 
-void initStack(Stack *stack) {
+void initStack(Stack *stack)
+{
     stack->top = NULL;
-    stack->bottom = NULL;
 }
 
 void push(Stack *stack, char *string)
 {
-    StackItem *aux;
-
-    for (int i = 0; i >= strlen(string) - 1; i++)
+    for (int i = 0; i < strlen(string); i++)
     {
         StackItem *new = malloc(sizeof(StackItem));
 
         new->character = string[i];
-        new->next = NULL;
+        new->down = NULL;
 
-        aux = stack;
-
-        if (stack == NULL)
+        if (stack->top == NULL)
         {
-            stack = new;
+            stack->top = new;
         }
         else
         {
-            aux->next = new;
-            stack = new;
+            new->down = stack->top;
+            stack->top = new;
         }
     }
 }
 
 void clearStack(Stack *stack)
 {
-    StackItem *aux = stack, *next = NULL;
+    StackItem *previous;
 
-    while (aux != NULL)
+    while (stack->top != NULL)
     {
-        printf("%c", aux->character);
-        next = aux->next;
-        free(aux);
-        aux = next;
+        printf("%c", stack->top->character);
+
+        previous = stack->top->down;
+        free(stack->top);
+        stack->top = previous;
     }
 }
 
 int main()
 {
-    Stack stack_order;
-    initStack(&stack_order);
+    Stack stack;
+    initStack(&stack);
 
     char string[15];
+    printf("Type a string: ");
     scanf("%s", string);
 
-    push(&stack_order.top, string);
+    push(&stack, string);
 
-    clearStack(&stack_order.top);
+    printf("Clearing stack: ");
+    clearStack(&stack);
 
     return 0;
 }
