@@ -14,9 +14,16 @@ void printArray(int array[], int length)
     }
 }
 
+void swap(int *array, int j)
+{
+    int aux = array[j];
+    array[j] = array[j + 1];
+    array[j + 1] = aux;
+}
+
 void bubbleSort(int array[], int length)
 {
-    int aux, swaps;
+    int swaps;
 
     for (int i = length; i >= 1; i--)
     {
@@ -26,15 +33,13 @@ void bubbleSort(int array[], int length)
         {
             if (array[j] > array[j + 1])
             {
-                aux = array[j];
-                array[j] = array[j + 1];
-                array[j + 1] = aux;
+                swap(array, j);
 
                 swaps = 1;
             }
         }
 
-        if (swaps == 0)
+        if (!swaps)
         {
             break;
         }
@@ -43,11 +48,13 @@ void bubbleSort(int array[], int length)
 
 int main()
 {
-    int array[] = {6, 12, 4, 10, 8, 31, 7, 3, 5, 11}, length = 10;
+    int array[] = {6, 12, 4, 10, 8, 31, 7, 3, 5, 11}, length = sizeof(array) / sizeof(array[0]);
 
+    printf("Before Sorting:\n");
     printArray(array, length);
 
     bubbleSort(array, length);
 
+    printf("\nAfter Sorting:\n");
     printArray(array, length);
 }
