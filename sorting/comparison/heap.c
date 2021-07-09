@@ -21,7 +21,7 @@ void swap(int *a, int *b)
 
 void heapify(int array[], int k, int length)
 {
-    int largest  = k;
+    int largest = k;
     int left = 2 * k + 1;
     int right = 2 * k + 2;
 

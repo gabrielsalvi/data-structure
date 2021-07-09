@@ -14,6 +14,7 @@ void printArray(int array[], int length)
 void swap(int *i, int *k)
 {
     int aux = *i;
+    
     *i = *k;
     *k = aux;
 }

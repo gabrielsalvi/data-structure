@@ -14,11 +14,11 @@ void printArray(int array[], int length)
     }
 }
 
-void swap(int *array, int i, int min)
+void swap(int *a, int *b)
 {
-    int aux = array[i];
-    array[i] = array[min];
-    array[min] = aux;
+    int aux = *a;
+    *a = *b;
+    *b = aux;
 }
 
 void selectionSort(int array[], int length)
@@ -37,7 +37,7 @@ void selectionSort(int array[], int length)
             }
         }
 
-        swap(array, i, min);
+        swap(&array[i], &array[min]);
     }
 }
 

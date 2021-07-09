@@ -16,7 +16,7 @@ void printArray(int array[], int length)
 
 void merge(int array[], int start, int middle, int end)
 {
-    int *aux = (int*)malloc((end-start+1) * sizeof(int));
+    int *aux = (int*) malloc((end-start+1) * sizeof(int));
     int i = start, j = middle + 1, k = 0;
 
     while(i <= middle && j <= end)
@@ -54,7 +54,6 @@ void merge(int array[], int start, int middle, int end)
     }
 
     free(aux);
-
 }
 
 void mergeSort(int array[], int start, int end)

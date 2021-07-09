@@ -14,11 +14,11 @@ void printArray(int array[], int length)
     }
 }
 
-void swap(int *array, int j)
+void swap(int *a, int *b)
 {
-    int aux = array[j];
-    array[j] = array[j + 1];
-    array[j + 1] = aux;
+    int aux = *a;
+    *a = *b;
+    *b = aux;
 }
 
 void bubbleSort(int array[], int length)
@@ -33,7 +33,7 @@ void bubbleSort(int array[], int length)
         {
             if (array[j] > array[j + 1])
             {
-                swap(array, j);
+                swap(&array[j], &array[j+1]);
 
                 swaps = 1;
             }
