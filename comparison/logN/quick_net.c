@@ -44,48 +44,38 @@ void swap(int *i, int *k)
     *k = aux;
 }
 
-int partition(int *array, int start, int end)
-{
-    int k = start, pivot_pos = end, aux;
-
-    for (int i = start; i < end; i++)
-    {
-        if (array[i] <= array[pivot_pos])
-        {
-            //swap(&array[i], &array[k]);
-            aux = array[i];
-            array[i] = array[k];
-            array[k] = aux;
-            k++;
+void quick_sort(int *a, int left, int right) {
+    int i, j, x;
+     
+    i = left;
+    j = right;
+    x = a[(left + right) / 2];
+     
+    while(i <= j) {
+        while(a[i] < x && i < right) {
+            i++;
+        }
+        while(a[j] > x && j > left) {
+            j--;
+        }
+        if(i <= j) {
+            swap(&a[i], &a[j]);
+            i++;
+            j--;
         }
     }
-
-    if (array[k] > array[pivot_pos])
-    {
-        // swap(&array[k], &array[pivot_pos]);
-        aux = array[k];
-        array[k] = array[pivot_pos];
-        array[pivot_pos] = aux;
-        pivot_pos = k;
+     
+    if(j > left) {
+        quick_sort(a, left, j);
     }
-
-    return pivot_pos;
-}
-
-void quickSort(int *array, int start, int end)
-{
-    if (start < end)
-    {
-        int pivot_pos = partition(array, start, end);
-
-        quickSort(array, start, pivot_pos - 1);
-        quickSort(array, pivot_pos + 1, end);
+    if(i < right) {
+        quick_sort(a, i, right);
     }
 }
 
 int main()
 {
-    int length = 50000; // 50000 100000
+    int length = 100000; // 50000 100000
 
     int increasing[length], decreasing[length], random[length];
     double increasing_t, decreasing_t, random_t;
@@ -97,19 +87,19 @@ int main()
 
     // sorting an increasing array
     start = clock();
-    quickSort(increasing, 0, length - 1);
+    quick_sort(increasing, 0, length - 1);
     end = clock();
     increasing_t = ((double)end - start) / CLOCKS_PER_SEC;
 
     // sorting a decreasing array
     start = clock();
-    quickSort(decreasing, 0, length - 1);
+    quick_sort(decreasing, 0, length - 1);
     end = clock();
     decreasing_t = ((double)end - start) / CLOCKS_PER_SEC;
 
     // sorting a random array
     start = clock();
-    quickSort(random, 0, length - 1);
+    quick_sort(random, 0, length - 1);
     end = clock();
     random_t = ((double)end - start) / CLOCKS_PER_SEC;
 

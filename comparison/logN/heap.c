@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define LENGTH 10000 // 50000 100000
-
 void printArray(int *array, int length)
 {
     for (int i = 0; i < length; i++)
@@ -87,29 +85,31 @@ void heapSort(int array[], int length)
 
 int main()
 {
-    int increasing[LENGTH], decreasing[LENGTH], random[LENGTH];
+    int length = 100000; // 50000 100000
+
+    int increasing[length], decreasing[length], random[length];
     double increasing_t, decreasing_t, random_t;
     clock_t start, end;
 
-    generateIncreasingArray(increasing, LENGTH);
-    generateDecreasingArray(decreasing, LENGTH);
-    generateRandomArray(random, LENGTH);
+    generateIncreasingArray(increasing, length);
+    generateDecreasingArray(decreasing, length);
+    generateRandomArray(random, length);
 
     // sorting an increasing array
     start = clock();
-    heapSort(increasing, LENGTH);
+    heapSort(increasing, length);
     end = clock();
     increasing_t = ((double)end - start) / CLOCKS_PER_SEC;
 
     // sorting a decreasing array
     start = clock();
-    heapSort(decreasing, LENGTH);
+    heapSort(decreasing, length);
     end = clock();
     decreasing_t = ((double)end - start) / CLOCKS_PER_SEC;
 
     // sorting a random array
     start = clock();
-    heapSort(random, LENGTH);
+    heapSort(random, length);
     end = clock();
     random_t = ((double)end - start) / CLOCKS_PER_SEC;
 
@@ -117,5 +117,9 @@ int main()
     printf("Decreasing Array: -> s: %lf, ms: %lf\n", decreasing_t, decreasing_t * 1000);
     printf("Random Array: -> s: %lf, ms: %lf\n", random_t, random_t * 1000);
     
+    // printArray(increasing, length);
+    // printArray(decreasing, length);
+    // printArray(random, length);
+
     return 0;
 }
