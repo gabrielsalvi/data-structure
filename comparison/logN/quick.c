@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <time.h>
 
+#define LENGTH 10000 //50000 100000
+
 void printArray(int *array, int length)
 {
     for (int i = 0; i < length; i++)
@@ -46,26 +48,20 @@ void swap(int *i, int *k)
 
 int partition(int *array, int start, int end)
 {
-    int k = start, pivot_pos = end, aux;
+    int k = start, pivot_pos = end;
 
     for (int i = start; i < end; i++)
     {
         if (array[i] <= array[pivot_pos])
         {
-            //swap(&array[i], &array[k]);
-            aux = array[i];
-            array[i] = array[k];
-            array[k] = aux;
+            swap(&array[i], &array[k]);
             k++;
         }
     }
 
     if (array[k] > array[pivot_pos])
     {
-        // swap(&array[k], &array[pivot_pos]);
-        aux = array[k];
-        array[k] = array[pivot_pos];
-        array[pivot_pos] = aux;
+        swap(&array[k], &array[pivot_pos]);
         pivot_pos = k;
     }
 
@@ -85,41 +81,35 @@ void quickSort(int *array, int start, int end)
 
 int main()
 {
-    int length = 50000; // 50000 100000
-
-    int increasing[length], decreasing[length], random[length];
+    int increasing[LENGTH], decreasing[LENGTH], random[LENGTH];
     double increasing_t, decreasing_t, random_t;
     clock_t start, end;
 
-    generateIncreasingArray(increasing, length);
-    generateDecreasingArray(decreasing, length);
-    generateRandomArray(random, length);
+    generateIncreasingArray(increasing, LENGTH);
+    generateDecreasingArray(decreasing, LENGTH);
+    generateRandomArray(random, LENGTH);
 
     // sorting an increasing array
     start = clock();
-    quickSort(increasing, 0, length - 1);
+    quickSort(increasing, 0, LENGTH - 1);
     end = clock();
     increasing_t = ((double)end - start) / CLOCKS_PER_SEC;
 
     // sorting a decreasing array
     start = clock();
-    quickSort(decreasing, 0, length - 1);
+    quickSort(decreasing, 0, LENGTH - 1);
     end = clock();
     decreasing_t = ((double)end - start) / CLOCKS_PER_SEC;
 
     // sorting a random array
     start = clock();
-    quickSort(random, 0, length - 1);
+    quickSort(random, 0, LENGTH - 1);
     end = clock();
     random_t = ((double)end - start) / CLOCKS_PER_SEC;
 
     printf("Increasing Array: -> s: %lf, ms: %lf\n", increasing_t, increasing_t * 1000);
     printf("Decreasing Array: -> s: %lf, ms: %lf\n", decreasing_t, decreasing_t * 1000);
     printf("Random Array: -> s: %lf, ms: %lf\n", random_t, random_t * 1000);
-
-    // printArray(increasing, length);
-    // printArray(decreasing, length);
-    // printArray(random, length);
     
     return 0;
 }
