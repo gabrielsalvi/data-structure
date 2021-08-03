@@ -6,12 +6,9 @@ void printArray(int array[], int length)
     for (int i = 0; i < length; i++)
     {
         printf("%d ", array[i]);
-
-        if (i == length - 1)
-        {
-            printf("\n");
-        }
     }
+    
+    printf("\n");
 }
 
 int getMax(int array[], int length) 
@@ -81,4 +78,6 @@ int main()
 
     printf("\nAfter Sorting:\n");
     printArray(array, length);
+
+    return 0;
 }

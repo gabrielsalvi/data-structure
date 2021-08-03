@@ -6,12 +6,9 @@ void printArray(int array[], int length)
     for (int i = 0; i < length; i++)
     {
         printf("%d ", array[i]);
-
-        if (i == length - 1)
-        {
-            printf("\n");
-        }
     }
+    
+    printf("\n");
 }
 
 void merge(int array[], int start, int middle, int end)
@@ -79,4 +76,6 @@ int main()
 
     printf("\nSorted array:\n");
     printArray(array, length);
+
+    return 0;
 }

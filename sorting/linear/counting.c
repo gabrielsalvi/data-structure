@@ -74,4 +74,6 @@ int main()
 
     printf("\nAfter Sorting:\n");
     printArray(array, length);
+
+    return 0;
 }
