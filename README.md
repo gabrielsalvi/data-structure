@@ -1,12 +1,10 @@
 # Data Structures and Algorithms
 
 ## Description
----
 
 This repository contains data structures and sorting algorithms implemented during my college graduation. The programming language used was C.
 
 ## Data Structures
----
 
 The following data structures were studied: </br>
 
@@ -19,7 +17,6 @@ The following data structures were studied: </br>
 * Trees
 
 ## Sorting Algorithms
----
 
 The following sorting algorithms were studied: </br>
 
