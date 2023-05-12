@@ -28,6 +28,7 @@ private:
     int num_arestas_;
     list<int> *lista_adjacencia;
     int obterGrau(int vertice);
+    void busca_profunda(int vertice, bool *marcado);
 };
 
 #endif /* GRAFO_H */

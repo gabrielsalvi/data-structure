@@ -70,9 +70,9 @@ bool Grafo::existe_caminho(int v1, int v2, vector<int> marcado) {
     if (v1 == v2) return true;
 
     marcado[v1] = 1;
-    for (auto u : lista_adjacencia[v1]) {
-        if (marcado[u] == 0) {
-            if (existe_caminho(u, v2, marcado)) return true;
+    for (auto vertice : lista_adjacencia[v1]) {
+        if (marcado[vertice] == 0) {
+            if (existe_caminho(vertice, v2, marcado)) return true;
         }
     }
     return false;
@@ -106,7 +106,25 @@ bool Grafo::eh_caminho(vector<int> vertices) {
 }
 
 bool Grafo::eh_conexo() {
+    bool *visited = new bool[num_vertices_];
+    busca_profunda(0, visited);
+
+    for(int i = 0; i < num_vertices_; i++) {
+        if(!visited[i]) {
+            return false;
+        }
+    }
+
     return true;
+}
+
+void Grafo::busca_profunda(int v, bool *marcado) {
+    marcado[v] = true;
+    for(auto vizinho = lista_adjacencia[v].begin(); vizinho != lista_adjacencia[v].end(); vizinho++) {
+        if(!marcado[*vizinho]) {
+            busca_profunda(*vizinho, marcado);
+        }
+    }
 }
 
 bool Grafo::eh_aciclico() {
